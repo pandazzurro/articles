@@ -77,6 +77,7 @@ path/to/lib/model.js:
 
 ```javascript
 var filesystem = require('fs');
+var path =  require('path');
 var models = {};
 var relationships = {};
 
@@ -109,7 +110,7 @@ var singleton = function singleton(){
 	
 	function init() {
 		filesystem.readdirSync(modelsPath).forEach(function(name){
-			var object = require(modelsPath + "/" + name);
+			var object = require(path.resolve(path.join(modelsPath , name)));
 			var options = object.options || {}
 			var modelName = name.replace(/\.js$/i, "");
 			models[modelName] = sequelize.define(modelName, object.model, options);
